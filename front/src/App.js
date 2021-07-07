@@ -1,3 +1,4 @@
+import React from 'react';
 import '@fontsource/roboto';
 import { Route, NavLink, HashRouter } from 'react-router-dom';
 
@@ -15,9 +16,15 @@ function App() {
       <div className="App">
         <hi>Stock Market</hi>
         <ul className="header">
-          <li><NavLink to="/">Home</NavLink></li>
-          <li><NavLink to="/stuff">Stuff</NavLink></li>
-          <li><NavLink to="/contact">Contact</NavLink></li>
+          <li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/stuff">Stuff</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact">Contact</NavLink>
+          </li>
         </ul>
         <div className="content">
           <Route exact path="/" component={Home} />

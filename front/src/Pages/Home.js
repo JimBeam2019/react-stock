@@ -14,56 +14,65 @@ import { GET_COMPANY_STOCKS } from '../Queries/CompanyQueries';
  * @extends {Component}
  */
 function Home() {
-    const [getCompanyStocks, { loading, error, data, networkStatus }] = useLazyQuery(GET_COMPANY_STOCKS, {
-        variables: {companyId: 1},
-        notifyOnNetworkStatusChange: true,
+  const [getCompanyStocks, { loading, error, data, networkStatus }] =
+    useLazyQuery(GET_COMPANY_STOCKS, {
+      variables: { companyId: 1 },
+      notifyOnNetworkStatusChange: true,
     });
 
-    if (networkStatus === NetworkStatus.refetch) {
-        return 'Refetching!';
-    }
-    if (loading) {
-        return <p>Loading...</p>
-    }
-    if (error) {
-        return <p>Error: {error}</p>
-    }
+  if (networkStatus === NetworkStatus.refetch) {
+    return 'Refetching!';
+  }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
-    const candleStickData = (data && data.getAllCompanyDailyStocks) ? 
-        data.getAllCompanyDailyStocks.map(({
-            date, open, close, high, low
-        }) => {
+  const candleStickData =
+    data && data.getAllCompanyDailyStocks
+      ? data.getAllCompanyDailyStocks.map(
+          ({ date, open, close, high, low }) => {
             const dateMoment = date.split('-');
             const year = dateMoment[0];
             const month = dateMoment[1];
             const day = dateMoment[2];
 
             return {
-                x: new Date(year, month, day), open, close, high, low
+              x: new Date(year, month, day),
+              open,
+              close,
+              high,
+              low,
             };
-        }): [];
+          }
+        )
+      : [];
 
-    const lineAreaData = (data && data.getAllCompanyDailyStocks) ? 
-        data.getAllCompanyDailyStocks.map(({
-            date, open, close, high, low
-        }) => {
-            const dateMoment = date.split('-');
-            const year = dateMoment[0];
-            const month = dateMoment[1];
-            const day = dateMoment[2];
+  const lineAreaData =
+    data && data.getAllCompanyDailyStocks
+      ? data.getAllCompanyDailyStocks.map(({ date, close }) => {
+          const dateMoment = date.split('-');
+          const year = dateMoment[0];
+          const month = dateMoment[1];
+          const day = dateMoment[2];
 
-            return { x: new Date(year, month, day), y: close };
-        }): [];
+          return { x: new Date(year, month, day), y: close };
+        })
+      : [];
 
-    return (
-        <div>
-        <button onClick={() => getCompanyStocks({ variables: {companyId: 2} })}>Get Data</button>
-            <h2>Home</h2>
-                <CandleStickChartComponent stocks={candleStickData} />
-                <LineAreaChartComponent stocks={lineAreaData} />
-                <StackBarChartComponent />
-        </div>
-    );
+  return (
+    <div>
+      <button onClick={() => getCompanyStocks({ variables: { companyId: 2 } })}>
+        Get Data
+      </button>
+      <h2>Home</h2>
+      <CandleStickChartComponent stocks={candleStickData} />
+      <LineAreaChartComponent stocks={lineAreaData} />
+      <StackBarChartComponent />
+    </div>
+  );
 }
 
 export default Home;

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 /**
  *
@@ -7,24 +7,24 @@ import { Component } from 'react';
  * @extends {Component}
  */
 class Stuff extends Component {
-    /**
-     *
-     *
-     * @return {*} 
-     * @memberof Stuff
-     */
-    render() {
-        return (
-            <div>
-                <h2>Stuff</h2>
-                <ol>
-                    <li>One</li>
-                    <li>Two</li>
-                    <li>Three</li>
-                </ol>
-            </div>
-        );
-    }
+  /**
+   *
+   *
+   * @return {*}
+   * @memberof Stuff
+   */
+  render() {
+    return (
+      <div>
+        <h2>Stuff</h2>
+        <ol>
+          <li>One</li>
+          <li>Two</li>
+          <li>Three</li>
+        </ol>
+      </div>
+    );
+  }
 }
 
 export default Stuff;
