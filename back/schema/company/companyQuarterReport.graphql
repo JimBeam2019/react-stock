@@ -1,0 +1,7 @@
+type companyQuarterReport {
+    companyId: Int
+    year: Int
+    quarterType: QuarterType
+    revenue: Float
+    netIncome: Float
+}

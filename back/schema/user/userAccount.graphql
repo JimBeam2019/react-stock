@@ -1,0 +1,5 @@
+type UserAccount {
+    id: Int
+    userName: String
+    balance: Float
+}

@@ -1,0 +1,4 @@
+type Query {
+    getUserAccount: UserAccount
+    getUserFunds: [UserFund!]
+}

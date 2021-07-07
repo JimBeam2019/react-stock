@@ -1,0 +1,7 @@
+enum FundType {
+    DOMESTIC_STOCK
+    FOREIGH_STOCK
+    BOND
+    SHORT_TERM_INVESTMENT
+    REAL_ESTATE
+}

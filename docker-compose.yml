@@ -1,0 +1,111 @@
+version: "3"
+
+services:
+  node_back:
+    image: node:14
+    user: node
+    container_name: node-14
+    working_dir: /usr/src/stock-back
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    links:
+      - elasticsearch
+    depends_on:
+      - "elasticsearch"
+      - "postgresql"
+    environment:
+      PGHOST: postgres-10-8
+      PGDB: postgres
+      PGUSER: admin
+      PGPASS: admin
+      ELASTIC_URL: http://elasticsearch:9200
+    networks:
+      node_net:
+        ipv4_address: 172.28.1.3
+    ports:
+      - "4000:4000"
+    command: yarn run start
+    volumes:
+      - ./back:/usr/src/stock-back
+
+  react:
+    image: node:14
+    container_name: react-js
+    working_dir: /usr/src/stock-front
+    networks:
+      node_net:
+        ipv4_address: 172.28.1.10
+    ports:
+      - "3000:3000"
+    command: yarn run start
+    volumes:
+      - ./front:/usr/src/stock-front
+    depends_on:
+      - "node_back"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      node_net:
+        ipv4_address: 172.28.1.4
+    ports:
+      - "9200:9200"
+
+  postgresql:
+    image: postgres:10.8
+    container_name: postgres-10-8
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    networks:
+      node_net:
+        ipv4_address: 172.28.1.5
+    # command: psql -U admin stock
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - data:/var/lib/postgresql/data
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: pgadmin-4
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      node_net:
+        ipv4_address: 172.28.1.6
+
+volumes:
+  postgresql:
+  data:
+  esdata:
+    driver: local
+
+networks:
+  node_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

@@ -1,0 +1,5 @@
+type UserFund {
+    userId: Int
+    fundType: FundType
+    balance: Float
+}

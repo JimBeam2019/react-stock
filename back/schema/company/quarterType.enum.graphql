@@ -1,0 +1,6 @@
+enum QuarterType {
+    QUARTER_ONE
+    QUARTER_TWO
+    QUARTER_THREE
+    QUARTER_FOUR
+}

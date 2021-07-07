@@ -1,0 +1,5 @@
+type ExchangeRate {
+    currency: String
+    rate: String
+    name: String
+}

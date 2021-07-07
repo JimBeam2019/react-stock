@@ -1,0 +1,8 @@
+type Company {
+    id: Int
+    title: String
+    foundedYear: Int
+    website: String
+    employeeNum: Int
+    headquarterAddress: String
+}
