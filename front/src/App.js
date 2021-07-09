@@ -8,12 +8,10 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-// import logo from './logo.svg';
 import './Styles/App.css';
 
 import Home from './Pages/Home';
 import Account from './Pages/Account';
-// import Contact from './Pages/Contact';
 
 function App() {
   return (
@@ -43,14 +41,9 @@ function App() {
             </Toolbar>
           </AppBar>
 
-          {/* <li>
-            <NavLink to="/contact">Contact</NavLink>
-          </li> */}
-
           <div className="content">
             <Route exact path="/" component={Home} />
             <Route path="/account" component={Account} />
-            {/* <Route path="/contact" component={Contact} /> */}
           </div>
         </div>
       </HashRouter>

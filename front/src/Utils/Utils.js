@@ -1,7 +1,7 @@
 export const getRounded = (num) => Math.round(num * 1000) / 1000;
 
 export const convertCompStockData = (data) => {
-  const candleStickData = [];
+  const candleStockData = [];
   const lineAreaData = [];
 
   if (data && data.getAllCompanyDailyStocks) {
@@ -12,7 +12,7 @@ export const convertCompStockData = (data) => {
         const month = dateMoment[1];
         const day = dateMoment[2];
 
-        candleStickData.push({
+        candleStockData.push({
           x: new Date(year, month, day),
           open,
           close,
@@ -28,7 +28,7 @@ export const convertCompStockData = (data) => {
     );
   }
 
-  return { candleStickData, lineAreaData };
+  return { candleStockData, lineAreaData };
 };
 
 export const convertQuarterReportData = (data) => {
