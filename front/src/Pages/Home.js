@@ -1,17 +1,22 @@
 import React from 'react';
 import { NetworkStatus, useLazyQuery } from '@apollo/client';
+import { Grid, Button, List, ListItem, ListItemText } from '@material-ui/core';
 
 import CandleStickChartComponent from '../Components/CandleStickChartComponent';
 import LineAreaChartComponent from '../Components/LineAreaChartComponent';
-import StackBarChartComponent from '../Components/StackBarChartComponent';
+import GroupedBarComponent from '../Components/GroupedBarComponent';
 
 import { GET_COMPANY_STOCKS } from '../Queries/CompanyQueries';
+import {
+  convertCompStockData,
+  convertQuarterReportData,
+  convertCompanyInfo,
+} from '../Utils/Utils';
 
 /**
  *
  *
- * @class Home
- * @extends {Component}
+ * @return {*}
  */
 function Home() {
   const [getCompanyStocks, { loading, error, data, networkStatus }] =
@@ -30,47 +35,56 @@ function Home() {
     return <p>Error: {error}</p>;
   }
 
-  const candleStickData =
-    data && data.getAllCompanyDailyStocks
-      ? data.getAllCompanyDailyStocks.map(
-          ({ date, open, close, high, low }) => {
-            const dateMoment = date.split('-');
-            const year = dateMoment[0];
-            const month = dateMoment[1];
-            const day = dateMoment[2];
+  const { candleStickData, lineAreaData } = convertCompStockData(data);
+  const quarterReportData = convertQuarterReportData(data);
+  const { title, foundedYear, website, employeeNum, headquarterAddress } =
+    convertCompanyInfo(data);
 
-            return {
-              x: new Date(year, month, day),
-              open,
-              close,
-              high,
-              low,
-            };
-          }
-        )
-      : [];
-
-  const lineAreaData =
-    data && data.getAllCompanyDailyStocks
-      ? data.getAllCompanyDailyStocks.map(({ date, close }) => {
-          const dateMoment = date.split('-');
-          const year = dateMoment[0];
-          const month = dateMoment[1];
-          const day = dateMoment[2];
-
-          return { x: new Date(year, month, day), y: close };
-        })
-      : [];
+  const compTitle = `Title: ${title}`;
+  const compFoundedYear = `Founded Year: ${foundedYear}`;
+  const compWebsite = `Title: ${website}`;
+  const compEmployeeNum = `Founded Year: ${employeeNum}`;
+  const compHQAdress = `Title: ${headquarterAddress}`;
 
   return (
     <div>
-      <button onClick={() => getCompanyStocks({ variables: { companyId: 2 } })}>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={() => getCompanyStocks({ variables: { companyId: 2 } })}
+      >
         Get Data
-      </button>
+      </Button>
       <h2>Home</h2>
-      <CandleStickChartComponent stocks={candleStickData} />
-      <LineAreaChartComponent stocks={lineAreaData} />
-      <StackBarChartComponent />
+      <Grid container spacing={10} justify="center">
+        <Grid container item xs={12} spacing={3}>
+          <CandleStickChartComponent stocks={candleStickData} />
+        </Grid>
+        <Grid container item xs={8} spacing={3}>
+          <LineAreaChartComponent stocks={lineAreaData} />
+          <GroupedBarComponent quarterReport={quarterReportData} />
+        </Grid>
+        <Grid container item xs={3} spacing={3}>
+          <List component="nav">
+            <ListItem>
+              <ListItemText primary={compTitle} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={compFoundedYear} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={compWebsite} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={compEmployeeNum} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={compHQAdress} />
+            </ListItem>
+          </List>
+        </Grid>
+      </Grid>
     </div>
   );
 }

@@ -49,6 +49,28 @@ const getCompanyByTitle = async (_root, args) => {
  *
  * @param {*} _root
  * @param {object} args
+ * @return {object}
+ */
+const getCompanyById = async (_root, args) => {
+  try {
+    const { id } = args;
+
+    const companyModel = new CompanyModel();
+    const resCompany = await companyModel.getCompanyById(id);
+
+    return resCompany;
+  } catch (e) {
+    logger.error(e);
+
+    return [];
+  }
+};
+
+/**
+ *
+ *
+ * @param {*} _root
+ * @param {object} args
  * @return {array}
  */
 const getCompaniesByTitle = async (_root, args) => {
@@ -79,5 +101,6 @@ const getCompaniesByTitle = async (_root, args) => {
 module.exports = {
   getAllCompanies,
   getCompanyByTitle,
+  getCompanyById,
   getCompaniesByTitle,
 };

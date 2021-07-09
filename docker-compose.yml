@@ -25,7 +25,7 @@ services:
         ipv4_address: 172.28.1.3
     ports:
       - "4000:4000"
-    command: yarn run start
+    command: ["./wait-for-elasticsearch.sh", "elasticsearch"]
     volumes:
       - ./back:/usr/src/stock-back
 
@@ -79,7 +79,6 @@ services:
     networks:
       node_net:
         ipv4_address: 172.28.1.5
-    # command: psql -U admin stock
     volumes:
       - postgresql:/var/lib/postgresql
       - data:/var/lib/postgresql/data

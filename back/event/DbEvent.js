@@ -41,11 +41,9 @@ class DbEvent extends EventEmitter {
       const companyModel = new CompanyModel();
       const resCompanies = await companyModel.getCompanies();
 
-      setTimeout(() => {
-        this.initElasticSearch(resCompanies).catch((err) => {
-          logger.error('Elastic Search error:', { err });
-        });
-      }, 12000);
+      this.initElasticSearch(resCompanies).catch((err) => {
+        logger.error('Elastic Search error:', { err });
+      });
     });
   }
 

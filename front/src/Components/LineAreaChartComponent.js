@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { VictoryChart, VictoryArea, VictoryTheme } from 'victory';
+import {
+  VictoryChart,
+  VictoryArea,
+  VictoryTheme,
+  VictoryContainer,
+} from 'victory';
 import {
   scaleDiscontinuous,
   discontinuitySkipWeekends,
@@ -30,10 +35,12 @@ class LineAreaChartComponent extends Component {
 
     return (
       <VictoryChart
-        width={400}
+        width={1200}
         height={400}
         theme={VictoryTheme.material}
         scale={{ x: discontinuousScale }}
+        domain={{ y: [0.5, 50.5] }}
+        containerComponent={<VictoryContainer responsive={true} />}
       >
         <VictoryArea
           data={this.props.stocks}

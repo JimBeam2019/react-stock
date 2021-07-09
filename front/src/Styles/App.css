@@ -63,4 +63,27 @@
 .react-stockchart {
   text-align: left;
 }
+
+ul.header {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.floatRight {
+  float: right;
+}
+
+.content {
+  padding-top: 100px;
+}
 /*# sourceMappingURL=App.css.map */

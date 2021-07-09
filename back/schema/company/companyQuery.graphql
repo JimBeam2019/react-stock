@@ -1,6 +1,7 @@
 type Query {
     getAllCompanies: [Company]
     getCompanyByTitle(title: String): Company
+    getCompanyById(id: Int): Company
     getCompaniesByTitle(title: String): [Company]
     getCompanyQuarterReports(companyId: Int): [companyQuarterReport]
 }

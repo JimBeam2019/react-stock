@@ -60,6 +60,32 @@ class CompanyModel extends SeqBaseModel {
       throw new Error(error);
     }
   }
+
+  /**
+   *
+   *
+   * @param {number} id
+   * @return {Promise}
+   * @memberof CompanyModel
+   */
+  async getCompanyById(id) {
+    try {
+      const getCompany = async function getCompany(t) {
+        const company = await Company.findOne(
+          { where: { id } },
+          { transaction: t }
+        );
+
+        return company;
+      };
+
+      const res = await this.applyTransaction(getCompany);
+
+      return res;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
 
 module.exports = CompanyModel;

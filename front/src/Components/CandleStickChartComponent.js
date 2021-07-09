@@ -5,6 +5,7 @@ import {
   VictoryCandlestick,
   VictoryTheme,
   VictoryTooltip,
+  VictoryContainer,
 } from 'victory';
 import moment from 'moment';
 
@@ -24,6 +25,9 @@ class CandleStickChartComponent extends Component {
           theme={VictoryTheme.material}
           domainPadding={{ x: 25 }}
           scale={{ x: 'time' }}
+          width={1800}
+          height={400}
+          containerComponent={<VictoryContainer responsive={true} />}
         >
           <VictoryAxis tickFormat={(t) => `${t.getDate()}/${t.getMonth()}`} />
           <VictoryAxis dependentAxis />

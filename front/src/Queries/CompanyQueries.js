@@ -5,12 +5,25 @@ export const SEARCH_COMPANIES = gql`
     getCompaniesByTitle(title: $title) {
       id
       title
+      foundedYear
+      website
+      employeeNum
+      headquarterAddress
     }
   }
 `;
 
 export const GET_COMPANY_STOCKS = gql`
   query getCompanyStocks($companyId: Int!) {
+    getCompanyById(id: $companyId) {
+      id
+      title
+      foundedYear
+      website
+      employeeNum
+      headquarterAddress
+    }
+
     getAllCompanyDailyStocks(companyId: $companyId) {
       open
       close
@@ -18,6 +31,13 @@ export const GET_COMPANY_STOCKS = gql`
       low
       volume
       date
+    }
+
+    getCompanyQuarterReports(companyId: $companyId) {
+      year
+      quarterType
+      revenue
+      netIncome
     }
   }
 `;
