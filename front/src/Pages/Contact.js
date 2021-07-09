@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import ExchangeRate from '../Components/ExchangeRate';
 
@@ -9,20 +9,20 @@ import ExchangeRate from '../Components/ExchangeRate';
  * @extends {Component}
  */
 class Contact extends Component {
-    /**
-     *
-     *
-     * @return {*} 
-     * @memberof Contact
-     */
-    render() {
-        return (
-            <div>
-                <h2>Contact</h2>
-                <ExchangeRate />
-            </div>
-        )
-    }
+  /**
+   *
+   *
+   * @return {*}
+   * @memberof Contact
+   */
+  render() {
+    return (
+      <div>
+        <h2>Contact</h2>
+        <ExchangeRate />
+      </div>
+    );
+  }
 }
 
 export default Contact;

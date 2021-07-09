@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 const apolloClient = new ApolloClient({
   uri: 'http://localhost:4000',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 ReactDOM.render(

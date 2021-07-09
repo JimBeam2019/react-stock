@@ -1,5 +1,5 @@
-const CompanyQuarterReportModel = require("../../model/database/CompanyQuarterReportModel");
-const logger = require("../../config/logger");
+const CompanyQuarterReportModel = require('../../model/database/CompanyQuarterReportModel');
+const logger = require('../../config/logger');
 
 /**
  *
