@@ -12,8 +12,10 @@ import { convertUserFundData } from '../Utils/Utils';
  * @return {*}
  */
 function Account() {
-  const [user, setUser] = useState({});
-  const [userFund, setUserFund] = useState([]);
+  const [pieData, setPieData] = useState([]);
+  const [userName, setUserName] = useState('');
+  const [userBalance, setUserBalance] = useState(0);
+
   const [getUserInfo, { loading, error, data, networkStatus }] = useLazyQuery(
     GET_USER_INFO,
     { notifyOnNetworkStatusChange: true }
@@ -21,11 +23,18 @@ function Account() {
 
   useEffect(() => {
     getUserInfo();
+
     if (data && data.getUserAccount) {
-      setUser(data.getUserAccount);
+      const user = data.getUserAccount;
+
+      setUserName(`Name: ${user.userName}`);
+      setUserBalance(`Balance: ${user.balance}`);
     }
+
     if (data && data.getUserFunds) {
-      setUserFund(data.getUserFunds);
+      const userFund = data.getUserFunds;
+
+      setPieData(convertUserFundData(userFund));
     }
   }, [getUserInfo, data]);
 
@@ -38,10 +47,6 @@ function Account() {
   if (error) {
     return <p>Error: {error}</p>;
   }
-
-  const pieData = convertUserFundData(userFund);
-  const userName = `Name: ${user.userName}`;
-  const userBalance = `Balance: ${user.balance}`;
 
   return (
     <div>
